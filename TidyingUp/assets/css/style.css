@@ -1,0 +1,365 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f7f9fc;
+    color: #2a2e35;
+    font-family: 'Inter', sans-serif;
+}
+
+body code{
+    background-color: #87837826;
+    border-radius: 3px;
+    padding: 2px;
+    color: rgb(206, 13, 13);
+}
+
+.navbar{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 150px 60px;
+}
+
+.navbar img{
+    height: 100px;
+    width: 100px;
+}
+
+.navbar ul{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    list-style: none;
+    font-size: 30px;
+    gap: 50px;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: #2a2e35;
+}
+
+#home hr{
+    width: 90%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.title_home{
+    font-size: 30px;
+    padding: 40px;
+    text-align: center;
+}
+
+/* 1. Introdução: Por que ordenar? */
+/*------------------------------------------------------------------------------*/
+
+section.PorQueOrdenar{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.PorQueOrdenar h1{
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+section.PorQueOrdenar div.texto_lateral{
+    border-left: 2px solid black;
+    padding-left: 20px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 19.5px;
+}
+
+section.PorQueOrdenar div.caixa_info{
+    background-color: #d9dee6;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #000000;
+    line-height: 1.7;
+    font-size: 19.5px;
+    transition: all 1s ease;
+}
+
+section.PorQueOrdenar div.caixa_info:hover{
+    background-color: #4F83C2;
+    transform: scale(1.05);
+}
+
+/* 2. O medidor de Eficiência: Notação Big O */
+/*------------------------------------------------------------------------------*/
+
+section.NotacaoBigO{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.NotacaoBigO h1{
+    font-size: 32px;
+    text-align: end;
+    margin-bottom: 25px;
+}
+
+section.NotacaoBigO div.texto_direita{
+    border-right: 2px solid black;
+    padding-right: 20px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 19.5px;
+}
+
+section.NotacaoBigO div.caixa_info{
+    background-color: #d9dee6;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid black;
+    line-height: 1.7;
+    font-size: 19.5px;
+    transition: all 1s ease;
+}
+
+section.NotacaoBigO div.caixa_info:hover{
+    background-color: #4F83C2;
+    transform: scale(1.05);
+}
+/* Analogias para Entender a Notação Big O */
+/*------------------------------------------------------------------------------*/
+
+section.AnalogiasBigO{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.AnalogiasBigO h1{
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+section.AnalogiasBigO div.texto_lateral{
+    border-left: 2px solid black;
+    padding-left: 20px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 19.5px;
+}
+
+section.AnalogiasBigO div.texto_lateral ul{
+    padding-left: 45px;
+}
+
+/* Por que o "Pior Caso"? */
+/*------------------------------------------------------------------------------*/
+
+section.PiorCaso{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.PiorCaso h1{
+    font-size: 32px;
+    text-align: end;
+    margin-bottom: 25px;
+}
+
+/* texto com linha lateral direita */
+section.PiorCaso div.texto_direita{
+    border-right: 2px solid black;
+    padding-right: 20px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 19.5px;
+}
+
+/* Tipos Comuns de Complexidade Big O: */
+/*------------------------------------------------------------------------------*/
+
+section.TiposComunsDeComplexidades{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.TiposComunsDeComplexidades h1{
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+section.TiposComunsDeComplexidades table{
+    width: 100%;
+    margin: 40px auto;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+}
+
+section.TiposComunsDeComplexidades th, section.TiposComunsDeComplexidades td{
+    border: 1px solid #2a2e35;
+    padding: 12px;
+    text-align: center;
+}
+
+section.TiposComunsDeComplexidades th{
+    background-color: #4F83C2;
+    color: black;
+}
+
+section.TiposComunsDeComplexidades tr:hover{
+    background-color: #d9dee6;
+}
+
+section.TiposComunsDeComplexidades div.caixa_info{
+    background-color: #d9dee6;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid black;
+    line-height: 1.7;
+    font-size: 19.5px;
+    transition: all 1s ease;
+}
+
+section.TiposComunsDeComplexidades div.caixa_info:hover{
+    background-color: #4F83C2;
+    transform: scale(1.05);
+}
+
+/* 3. Métodos de Ordenação (Os Protagonistas) */
+/*------------------------------------------------------------------------------*/
+
+div.titulo_metodos h1{
+    font-size: 32px;
+    margin-bottom: 25px;
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.Metodos section.upper{
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    gap: 250px;
+    justify-content: center;
+}
+
+section.Metodos section.lower{
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    gap: 250px;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+section.Metodos div{
+    background-color: #4F83C2;
+    width:400px;
+    height:450px;
+    border-radius:25px;
+    text-align: center;
+    text-decoration: none;
+    padding: 20px;
+    transition: all 1s ease;
+}
+
+section.Metodos div:hover{
+    background-color: #04254e;
+    color: #ff0000;
+    transform: scale(1.05);
+}
+
+section.Metodos div p{
+    padding-bottom: 15px;
+}
+
+section.Metodos div a{
+    text-decoration: none;
+    color: #2a2e35;
+}
+
+section.Metodos div a hr{
+    background-color: #d9dee6;
+}
+
+section.Metodos div a img{
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    margin: 120px auto;
+}
+
+/* 4. Comparativo final */
+/*------------------------------------------------------------------------------*/
+
+section.ComparativoFinal{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.ComparativoFinal h1{
+    font-size: 32px;
+    text-align: end;
+    margin-bottom: 25px;
+}
+
+/* texto com linha lateral direita */
+section.ComparativoFinal div.texto_direita{
+    border-right: 2px solid black;
+    padding-right: 20px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 19.5px;
+}
+
+section.ComparativoFinal h1{
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+section.ComparativoFinal table{
+    width: 100%;
+    margin: 40px auto;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+}
+
+section.ComparativoFinal th, section.ComparativoFinal td{
+    border: 1px solid #2a2e35;
+    padding: 12px;
+    text-align: center;
+}
+
+section.ComparativoFinal th{
+    background-color: #4F83C2;
+    color: black;
+}
+
+/* 5. Teste de fixação (Quiz) */
+/*------------------------------------------------------------------------------*/
+
+section.Questionario{
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+section.Questionario h1{
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+section.Questionario p{
+    font-size: 19.5px;
+    margin-bottom: 25px;
+}
+
+section.Questionario ul{
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+section.Questionario li{
+    list-style: none;
+    padding-left: 40px;
+}

@@ -1,0 +1,93 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f7f9fc;
+    color: #2a2e35;
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar{
+    display: flex;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 150px 60px;
+}
+
+.navbar img{
+    height: 100px;
+    width: 100px;
+}
+
+.navbar ul{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    list-style: none;
+    font-size: 30px;
+    gap: 50px;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: #2a2e35;
+}
+
+#selection_sort hr{
+    width: 90%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.title_home{
+    font-size: 30px;
+    padding: 40px;
+    text-align: center;
+}
+
+div.descricao{
+    max-width: 1500px;
+    margin: 60px auto;
+    font-size: 19.5px;
+}
+
+div.caixa_info{
+    max-width: 1500px;
+    margin: 60px auto;
+    background-color: #d9dee6;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #000000;
+    line-height: 1.7;
+    font-size: 19.5px;
+    transition: all 1s ease;
+}
+
+div.caixa_info:hover{
+    background-color: #4F83C2;
+    transform: scale(1.05);
+}
+
+div.complexidade{
+    max-width: 1500px;
+    margin: 60px auto;
+    font-size: 19.5px;
+}
+
+.container img{
+    display: block;
+    margin: 40px auto;
+    max-width: 1500px;
+    border-radius: 30px;
+}
+
+h1{
+    max-width: 1500px;
+    margin: 20px auto;
+}

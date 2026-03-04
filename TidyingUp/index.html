@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tidying Up</title>
+        <link rel="stylesheet" href="assets/css/style.css" >
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">       </head>
+    <body>
+        <div id="home">
+            <nav class="navbar">
+                <img src="data/Logo_Tidying_Up.png" alt="Logo Tidying Up">
+
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#metodos">Métodos</a></li>
+                    <li><a href="#questionario">Questionário</a></li>
+                </ul>
+            </nav>
+
+            <hr>
+
+            <div class="title_home">
+                <h1>Métodos de ordenação</h1>
+                <p>Utilizando Python</p>
+            </div>
+        </div>
+
+        <section class="PorQueOrdenar">
+            <h1>1. Por que ordenar?</h1>
+
+            <div class="texto_lateral">
+                <p>
+                    A ordenação é uma das operações mais fundamentais e frequentemente 
+                    utilizadas na ciência da computação. Em termos simples, 
+                    <strong>ordenar</strong> significa organizar um conjunto de dados em uma 
+                    sequência específica, seja ela crescente, decrescente, alfabética ou 
+                    numérica. Imagine a dificuldade de encontrar um livro específico em uma 
+                    biblioteca onde os livros estão dispostos aleatoriamente, ou localizar um 
+                    contato em uma lista telefônica não ordenada. A organização facilita 
+                    imensamente a busca e o processamento de informações, tornando-a uma 
+                    habilidade essencial para qualquer sistema computacional.
+                </p>
+            </div>
+
+            <div class="caixa_info">
+                <p>
+                    Neste site, exploraremos os principais algoritmos de ordenação, como eles funcionam,
+                    suas vantagens e desvantagens, e como implementá-los em Python. Nosso objetivo é tornar
+                    este tópico acessível a todos, desde iniciantes até aqueles com alguma experiência em
+                    programação, utilizando analogias do dia a dia e exemplos práticos.
+                </p>
+            </div>
+        </section>
+
+        <section class="NotacaoBigO">
+            <h1>2. O medidor de eficiência: Notação Big O</h1>
+
+            <div class="texto_direita">
+                <p>
+                    Para entender a eficiência de um algoritmo, não podemos 
+                    simplesmente medir o tempo que ele leva para ser executado em um 
+                    computador. Isso porque o tempo de execução pode variar 
+                    drasticamente dependendo do hardware, do sistema operacional e de 
+                    outros processos em execução. Em vez disso, utilizamos a 
+                    <strong>Notação Big O</strong> para 
+                    descrever o desempenho de um algoritmo de forma abstrata e 
+                    independente de máquina.
+                </p>
+            </div>
+
+            <div class="caixa_info">
+                <p>
+                    A Notação Big O nos permite analisar como o tempo de execução 
+                    (ou o espaço de memória) de um algoritmo cresce à medida que o 
+                    tamanho da entrada (geralmente denotado por `n`) aumenta. Ela 
+                    foca no <strong>pior caso</strong> de desempenho, garantindo que o 
+                    algoritmo nunca será mais lento do que o limite superior 
+                    estabelecido. Isso é crucial para prever o comportamento de um 
+                    sistema sob carga máxima e evitar surpresas desagradáveis.
+                </p>
+            </div>
+        </section>
+
+        <section class="AnalogiasBigO">
+            <h1>Analogias para entender a Notação Big O</h1>
+
+            <div class="texto_lateral">
+                <p>
+                    Para ilustrar os diferentes tipos de complexidade, vamos usar a
+                    <strong>analogia do carteiro</strong> em uma cidade:
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>O(1) - Tempo Constante:</strong> Imagine que o 
+                        carteiro precisa entregar uma carta em uma casa específica 
+                        que ele já conhece o endereço exato e a localização no mapa. 
+                        Não importa se a cidade tem 10 casas ou 1 milhão de casas, o 
+                        tempo para entregar essa carta será sempre o mesmo, pois ele 
+                        vai direto ao ponto. A quantidade de trabalho não muda com o 
+                        tamanho da cidade.
+                    </li>
+                    <li>
+                        <strong>O(n) - Tempo Linear:</strong> Agora, o carteiro 
+                        precisa encontrar uma casa em uma rua onde as casas não têm 
+                        número e ele precisa verificar uma por uma. Se a rua tiver 
+                        <code>n</code> casas, no pior caso, ele terá que verificar 
+                        todas as <code>n</code> casas. 
+                        Se a rua dobrar de tamanho, o tempo para encontrar a casa também 
+                        dobrará. O tempo de trabalho cresce proporcionalmente ao tamanho da 
+                        entrada.
+                    </li>
+                    <li>
+                        <strong>O(n²) - Tempo Quadrático:</strong> Considere uma 
+                        festa onde cada pessoa precisa cumprimentar todas as outras 
+                        pessoas. Se há <code>n</code> pessoas na festa, cada uma delas fará 
+                        <code>n-1</code> cumprimentos. O número total de cumprimentos será aproximadamente 
+                        <code>n * n</code>, ou <code>n²</code>. Se o número de pessoas na festa dobrar, 
+                        o número de cumprimentos aumentará quatro vezes. O tempo de trabalho cresce 
+                        exponencialmente com o tamanho da entrada.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="PiorCaso">
+            <h1>Por que o "pior caso"?</h1>
+
+            <div class="texto_direita">
+                <p>
+                    Ao analisar algoritmos, focamos no pior caso porque ele nos dá 
+                    uma garantia sobre o desempenho máximo que podemos esperar. Se um 
+                    algoritmo se comporta bem no pior caso, ele certamente se 
+                    comportará tão bem ou melhor em outros cenários. É como projetar 
+                    uma ponte para suportar o maior peso possível, garantindo sua 
+                    segurança em todas as condições.
+                </p>
+            </div>
+        </section>
+
+        <section class="TiposComunsDeComplexidades">
+            <h1>Tipos Comuns de Complexidade Big O:</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Notação Big O</th>
+                        <th>Nome de complexidade</th>
+                        <th>Descrição</th>
+                        <th>Exemplo de algoritmo</th>
+                        <th>Impacto no Desempenho (n = 1.000.000)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>O(1)</td>
+                        <td>Constante</td>
+                        <td>O tempo de execução é o mesmo, independentemente do tamanho da entrada.</td>
+                        <td>Acessar um elemento em um array pelo índice</td>
+                        <td>Instantâneo</td>
+                    </tr>
+
+                    <tr>
+                        <td>O(log n)</td>
+                        <td>Logarítmica</td>
+                        <td>O tempo de execução cresce muito lentamente com o tamanho da entrada.</td>
+                        <td>Busca Binária</td>
+                        <td>Muito rápido (aprox. 20 operações)</td>
+                    </tr>
+
+                    <tr>
+                        <td>O(n)</td>
+                        <td>Linear</td>
+                        <td>O tempo de execução cresce proporcionalmente ao tamanho da entrada.</td>
+                        <td>Percorrer uma lista para encontrar um item</td>
+                        <td>Rápido (1 milhão de operações)</td>
+                    </tr>
+
+                    <tr>
+                        <td>O(n log n)</td>
+                        <td>Linear-Logarítmica</td>
+                        <td>O tempo de execução cresce um pouco mais rápido que linear, mas ainda é eficiente.</td>
+                        <td>Merge Sort, Quick Sort (média)</td>
+                        <td>Moderado (20 milhões de operações)</td>
+                    </tr>
+
+                    <tr>
+                        <td>O(n²)</td>
+                        <td>Quadrática</td>
+                        <td>O tempo de execução cresce exponencialmente com o tamanho da entrada.</td>
+                        <td>Bubble Sort, Selection Sort, Insertion Sort</td>
+                        <td>Lento (1 trilhão de operações)</td>
+                    </tr>
+
+                    <tr>
+                        <td>O(2^n)</td>
+                        <td>Exponencial</td>
+                        <td>O tempo de execução dobra a cada adição à entrada.</td>
+                        <td>Problema do Caixeiro Viajante (força bruta)</td>
+                        <td>Extremamente lento (inviável para n > 20)</td>
+                    </tr>
+
+                    <tr>
+                        <td>O(n!)</td>
+                        <td>Fatorial</td>
+                        <td>O tempo de execução cresce de forma extremamente rápida.</td>
+                        <td>Gerar todas as permutações de uma lista</td>
+                        <td>Inviável para n > 10</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="caixa_info">
+                <p>
+                    Compreender a Notação Big O é fundamental para escolher o 
+                    algoritmo mais adequado para cada problema, especialmente ao 
+                    lidar com grandes volumes de dados. Agora que temos essa base, 
+                    vamos explorar os algoritmos de ordenação em si. 
+                </p>
+            </div>
+        </section>
+
+        <div class="titulo_metodos">
+            <h1>3. Métodos de Ordenação (Os Protagonistas)</h1>
+        </div>
+
+        <section id="metodos" class="Metodos">
+            <section class="upper">
+                <div class="Bubble_sort">
+                    <a href="pages/Bubble_sort.html" target="_self">
+                        <h1>Bubble sort</h1>
+                        <p>Ordenação por bolha</p>
+                        <hr>
+                        <img src="data/bubble_chart_icon_white.png" alt="">
+                    </a>
+                </div>
+
+                <div class="Selection_sort">
+                    <a href="pages/Selection_sort.html" target="_self">
+                        <h1>Selection sort</h1>
+                        <p>Ordenação por seleção</p>
+                        <hr>
+                        <img src="data/ink_selection_icon_white.png" alt="">
+                    </a>
+                </div>
+
+                <div class="Insertion_sort">
+                    <a href="pages/Insertion_sort.html" target="_self">
+                        <h1>Insertion sort</h1>
+                        <p>Ordenação por inserção</p>
+                        <hr>
+                        <img src="data/add_notes_icon_white.png" alt="">
+                    </a>
+                </div>
+            </section>
+            
+            <section class="lower">
+                <div class="Merge_sort">
+                    <a href="pages/Merge_sort.html">
+                        <h1>Merge sort</h1>
+                        <p>Ordenação por intercalação/mesclagem</p>
+                        <hr>
+                        <img src="data/merge_icon_white.png" alt="">
+                    </a>
+                </div>
+
+                <div class="Quick_sort">
+                    <a href="pages/Quick_sort.html">
+                        <h1>Quick sort</h1>
+                        <p>Ordenação rápida</p>
+                        <hr>
+                        <img src="data/bolt_icon_white.png" alt="">
+                    </a>
+                </div>
+            </section>
+        </section>
+
+        <section class="ComparativoFinal">
+            <h1>4. Comparativo final</h1>
+
+            <div class="texto_direita">
+                <p>
+                    Para facilitar a escolha do algoritmo de ordenação mais adequado para cada situação, apresentamos uma tabela comparativa dos 
+                    métodos que exploramos, destacando suas principais características e complexidades.
+                </p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algoritmo</th>
+                        <th>Complexidade (Pior Caso)</th>
+                        <th>Complexidade (Melhor Caso)</th>
+                        <th>Estabilidade</th>
+                        <th>Espaço Extra</th>
+                        <th>Facilidade de Implementação</th>
+                        <th>Quando Usar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Bubble sort</td>
+                        <td>O(n²)</td>
+                        <td>O(n²)</td>
+                        <td>Sim</td>
+                        <td>O(1)</td>
+                        <td>Muito Fácil</td>
+                        <td>Fins didáticos ou listas muito pequenas.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Selection sort</td>
+                        <td>O(n²)</td>
+                        <td>O(n²)</td>
+                        <td>Não</td>
+                        <td>O(1)</td>
+                        <td>Fácil</td>
+                        <td>Fins didáticos ou listas muito pequenas.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Insertion sort</td>
+                        <td>O(n²)</td>
+                        <td>O(n)</td>
+                        <td>Sim</td>
+                        <td>O(1)</td>
+                        <td>Fácil</td>
+                        <td>Listas pequenas ou quase ordenadas.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Merge sort</td>
+                        <td>O(n log n)</td>
+                        <td>O(n log n)</td>
+                        <td>Sim</td>
+                        <td>O(n)</td>
+                        <td>Moderada</td>
+                        <td>Grandes volumes de dados, quando a estabilidade é importante.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Quick sort</td>
+                        <td>O(n²)</td>
+                        <td>O(n log n)</td>
+                        <td>Não</td>
+                        <td>O(log n) (recursão)</td>
+                        <td>Moderada</td>
+                        <td>Uso geral, geralmente o mais rápido na prática para grandes volumes de dados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="questionario" class="Questionario">
+            <h1>5. Teste de Fixação (Quiz)</h1>
+
+            <p>Verifique seus conhecimentos sobre os algoritmos de ordenação com este pequeno quiz!</p>
+
+            <div class="perguntas">
+                <ul>
+                    <li><strong>1.  Qual algoritmo de ordenação é frequentemente comparado à organização de um baralho de cartas na mão?</strong>
+                        <ul>
+                            <li>a) Bubble Sort</li>
+                            <li>b) Selection Sort</li>
+                            <li>c) Insertion Sort</li>
+                            <li>d) Merge Sort</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>2.  Se uma lista já está quase toda ordenada, qual método de ordenação simples (O(n²)) tende a ter o melhor desempenho?</strong>
+                        <ul>
+                            <li>a) Bubble Sort</li>
+                            <li>b) Selection Sort</li>
+                            <li>c) Insertion Sort</li>
+                            <li>d) Quick Sort</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>3.  O que a Notação Big O realmente mede em relação a um algoritmo?</strong>
+                        <ul>
+                            <li>a) O tempo exato em segundos que o algoritmo leva para executar.</li>
+                            <li>b) A quantidade de memória RAM que o algoritmo consome.</li>
+                            <li>c) Como o tempo de execução (ou operações) do algoritmo cresce com o aumento do tamanho da entrada.</li>
+                            <li>d) A facilidade de implementação do algoritmo.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>4.  Qual é a principal vantagem do Merge Sort sobre o Bubble Sort para grandes conjuntos de dados?</strong>
+                        <ul>
+                            <li>a) O Merge Sort é mais fácil de implementar.</li>
+                            <li>b) O Merge Sort tem uma complexidade de tempo de O(n log n) em todos os casos, enquanto o Bubble Sort é O(n²).</li>
+                            <li>c) O Bubble Sort consome menos memória.</li>
+                            <li>d) O Merge Sort é um algoritmo instável.</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>5.  O que acontece com o tempo de execução de um algoritmo com complexidade O(n²) se dobrarmos o tamanho da lista de entrada (<code>n</code>)?</strong>
+                        <ul>
+                            <li>a) O tempo de execução dobra.</li>
+                            <li>b) O tempo de execução quadruplica.</li>
+                            <li>c) O tempo de execução permanece o mesmo.</li>
+                            <li>d) O tempo de execução diminui pela metade.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </body>
+</html>
