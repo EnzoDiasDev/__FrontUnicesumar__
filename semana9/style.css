@@ -1,0 +1,599 @@
+/* ============================================================
+   RESET & VARIÁVEIS GLOBAIS
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Paleta principal */
+  --fundo:          #09090b;
+  --superficie:     #111113;
+  --cartao:         #18181b;
+  --borda:          #27272a;
+  --borda-clara:    #3f3f46;
+  --texto:          #fafafa;
+  --texto-muted:    #71717a;
+  --acento:         #a3e635;        /* lima/verde-amarelo */
+  --acento-fundo:   rgba(163,230,53, 0.10);
+  --acento-borda:   rgba(163,230,53, 0.25);
+
+  /* Cores de resultado */
+  --cor-verde:      #4ade80;
+  --fundo-verde:    rgba(74, 222, 128, 0.08);
+  --borda-verde:    rgba(74, 222, 128, 0.30);
+
+  --cor-azul:       #60a5fa;
+  --fundo-azul:     rgba(96, 165, 250, 0.08);
+  --borda-azul:     rgba(96, 165, 250, 0.30);
+
+  --cor-vermelho:   #f87171;
+  --fundo-vermelho: rgba(248, 113, 113, 0.08);
+  --borda-vermelho: rgba(248, 113, 113, 0.30);
+
+  /* Tipografia */
+  --fonte:          'Syne', sans-serif;
+  --fonte-mono:     'JetBrains Mono', monospace;
+
+  --raio:           8px;
+  --raio-lg:        14px;
+  --trans:          0.2s ease;
+}
+
+/* ============================================================
+   BASE
+============================================================ */
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* Grade de pontos decorativa no fundo */
+.grade-fundo {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Garante que o conteúdo fique acima da grade */
+.topo, .nav-abas, .pagina { position: relative; z-index: 1; }
+
+/* ============================================================
+   TOPO / CABEÇALHO
+============================================================ */
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 48px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.topo__marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.marca-ic {
+  font-family: var(--fonte-mono);
+  font-size: 14px;
+  color: var(--acento);
+  background: var(--acento-fundo);
+  border: 1px solid var(--acento-borda);
+  padding: 4px 10px;
+  border-radius: var(--raio);
+}
+
+.marca-nome {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.topo__sub {
+  font-size: 12px;
+  color: var(--texto-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   NAVEGAÇÃO POR ABAS
+============================================================ */
+.nav-abas {
+  display: flex;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--borda);
+  gap: 0;
+  overflow-x: auto;
+}
+
+/* Esconde a barra de rolagem no overflow horizontal */
+.nav-abas::-webkit-scrollbar { display: none; }
+
+.aba {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 22px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--texto-muted);
+  font-family: var(--fonte);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: -1px;         /* se sobrepõe à borda inferior da nav */
+  transition: color var(--trans), border-color var(--trans);
+}
+
+.aba:hover {
+  color: var(--texto);
+}
+
+/* Aba ativa recebe cor de acento e borda embaixo */
+.aba--ativa {
+  color: var(--acento);
+  border-bottom-color: var(--acento);
+}
+
+.aba__num {
+  font-family: var(--fonte-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--texto-muted);
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.aba--ativa .aba__num {
+  color: var(--acento);
+  background: var(--acento-fundo);
+  border-color: var(--acento-borda);
+}
+
+/* ============================================================
+   PÁGINA / PAINÉIS DE EXERCÍCIO
+============================================================ */
+.pagina {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 44px 48px 0;
+}
+
+/* Painel oculto */
+.ex {
+  display: none;
+}
+
+/* Painel visível — entra com animação suave */
+.ex--ativo {
+  display: block;
+  animation: entrar 0.28s ease;
+}
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabeçalho de cada exercício */
+.ex__cabecalho {
+  margin-bottom: 36px;
+}
+
+.ex__rotulo {
+  display: inline-block;
+  font-family: var(--fonte-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--acento);
+  background: var(--acento-fundo);
+  border: 1px solid var(--acento-borda);
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.ex__titulo {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+
+.ex__desc {
+  font-size: 14px;
+  color: var(--texto-muted);
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+/* Corpo do exercício (empilha elementos verticalmente) */
+.ex__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ============================================================
+   ELEMENTOS DE FORMULÁRIO
+============================================================ */
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Input de texto padrão */
+.campo-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  color: var(--texto);
+  font-family: var(--fonte-mono);
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+
+.campo-input:focus {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px var(--acento-fundo);
+}
+
+.campo-input::placeholder {
+  color: var(--borda-clara);
+  font-size: 13px;
+}
+
+/* Variante maior para números grandes */
+.campo-input--grande {
+  font-size: 30px;
+  padding: 12px 16px;
+}
+
+/* Remove setas dos inputs numéricos */
+.campo-input[type="number"] { -moz-appearance: textfield; }
+.campo-input[type="number"]::-webkit-inner-spin-button,
+.campo-input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+/* Select */
+.campo-select {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  color: var(--texto);
+  font-family: var(--fonte);
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--trans);
+  appearance: none;
+  /* Seta customizada */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2371717a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.campo-select:focus {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px var(--acento-fundo);
+}
+
+/* Botão principal */
+.btn-principal {
+  align-self: flex-start;
+  padding: 13px 30px;
+  background: var(--acento);
+  color: #09090b;
+  border: none;
+  border-radius: var(--raio);
+  font-family: var(--fonte);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity var(--trans), transform var(--trans);
+}
+
+.btn-principal:hover  { opacity: 0.85; }
+.btn-principal:active { transform: scale(0.97); }
+
+/* ============================================================
+   CAIXA DE RESULTADO (compartilhada entre exercícios)
+============================================================ */
+.resultado {
+  display: none;           /* Oculto por padrão */
+  border-radius: var(--raio-lg);
+  padding: 20px 24px;
+  border: 1px solid;
+  animation: entrar 0.25s ease;
+}
+
+/* JS adiciona esta classe para mostrar o resultado */
+.resultado--visivel {
+  display: block;
+}
+
+/* Variações de cor — JS aplica uma destas classes */
+.resultado--verde {
+  background: var(--fundo-verde);
+  border-color: var(--borda-verde);
+  color: var(--cor-verde);
+}
+
+.resultado--azul {
+  background: var(--fundo-azul);
+  border-color: var(--borda-azul);
+  color: var(--cor-azul);
+}
+
+.resultado--vermelho {
+  background: var(--fundo-vermelho);
+  border-color: var(--borda-vermelho);
+  color: var(--cor-vermelho);
+}
+
+/* Texto dentro do resultado */
+.resultado__titulo {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.resultado__texto {
+  font-family: var(--fonte-mono);
+  font-size: 13px;
+  line-height: 1.8;
+  opacity: 0.85;
+  white-space: pre-line;   /* Respeita \n para quebras de linha */
+}
+
+/* ============================================================
+   EXERCÍCIO 02 — LAYOUTS ESPECÍFICOS DO CONVERSOR
+============================================================ */
+.conv-grade {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+/* Cada bloco de unidade (Celsius / Fahrenheit) */
+.conv-bloco {
+  flex: 1;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-lg);
+  padding: 18px 20px;
+  transition: border-color var(--trans);
+}
+
+.conv-bloco:focus-within {
+  border-color: var(--acento);
+}
+
+/* O input dentro do bloco não tem borda própria — herdada do bloco */
+.conv-bloco .campo-input--grande {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 8px 0 0;
+}
+
+.conv-bloco .campo-input--grande:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.conv-unidade {
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--acento);
+}
+
+/* Coluna do meio com o botão de inverter */
+.conv-centro {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Botão de inverter — circular */
+.btn-inverter {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  color: var(--texto-muted);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--trans), color var(--trans);
+}
+
+.btn-inverter:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+/* Animação de giro ao clicar */
+.btn-inverter.girando {
+  animation: girar 0.4s ease forwards;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
+
+/* Referências de temperatura */
+.conv-refs {
+  border-top: 1px solid var(--borda);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.conv-refs__titulo {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-muted);
+  margin-bottom: 8px;
+}
+
+.conv-ref {
+  font-size: 13px;
+  color: var(--texto-muted);
+  padding: 9px 14px;
+  border-radius: var(--raio);
+  transition: background var(--trans), color var(--trans);
+}
+
+.conv-ref strong { color: inherit; }
+
+/* Destaque quando a temperatura está próxima */
+.conv-ref--ativa {
+  background: var(--acento-fundo);
+  color: var(--acento);
+}
+
+/* ============================================================
+   EXERCÍCIO 03 — GRADE DAS NOTAS
+============================================================ */
+.grade-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* ============================================================
+   EXERCÍCIO 04 — GRADE DO BANCO
+============================================================ */
+.grade-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* O select de bandeira ocupa as duas colunas */
+.grade-2 .campo-grupo:first-child {
+  grid-column: 1 / -1;
+}
+
+/* Tabela de resumo do resultado do banco */
+.banco-tabela {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.banco-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 14px;
+}
+
+.banco-linha:last-child {
+  border-bottom: none;
+}
+
+.banco-linha__desc {
+  color: inherit;
+  opacity: 0.75;
+  font-size: 13px;
+}
+
+.banco-linha__valor {
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Linha de destaque (total e parcela) */
+.banco-linha--destaque {
+  font-size: 16px;
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  border-bottom: none;
+}
+
+.banco-linha--destaque .banco-linha__desc {
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* ============================================================
+   RESPONSIVO — telas pequenas
+============================================================ */
+@media (max-width: 580px) {
+  .topo       { padding: 20px 20px; flex-wrap: wrap; }
+  .nav-abas   { padding: 0 16px; }
+  .pagina     { padding: 28px 20px 0; }
+  .ex__titulo { font-size: 28px; }
+
+  /* Conversor empilha verticalmente */
+  .conv-grade { flex-direction: column; }
+  .conv-centro { justify-content: center; }
+  .btn-inverter { transform: rotate(90deg); }
+  .btn-inverter.girando {
+    animation: girar-v 0.4s ease forwards;
+  }
+  @keyframes girar-v {
+    from { transform: rotate(90deg); }
+    to   { transform: rotate(270deg); }
+  }
+
+  /* Notas em coluna única */
+  .grade-3 { grid-template-columns: 1fr; }
+
+  /* Banco em coluna única */
+  .grade-2                          { grid-template-columns: 1fr; }
+  .grade-2 .campo-grupo:first-child { grid-column: 1; }
+}
