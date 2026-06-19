@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -6,8 +6,6 @@ import {
   Card,
   Button,
   Alert,
-  Badge,
-  Modal,
 } from "react-bootstrap";
 import ChessBoard from "./components/ChessBoard";
 import "./components/ChessBoard.css";
@@ -18,11 +16,6 @@ import {
   isKingInCheck,
   isGameOver,
 } from "./utils/chessLogic";
-import io from "socket.io-client";
-
-const socket = io("http://localhost:3001", {
-  autoConnect: false,
-});
 
 function App() {
   const [board, setBoard] = useState(INITIAL_BOARD);
@@ -30,76 +23,8 @@ function App() {
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [validMoves, setValidMoves] = useState([]);
   const [gameStatus, setGameStatus] = useState("playing");
-  const [playerColor, setPlayerColor] = useState(null);
-  const [connected, setConnected] = useState(false);
-  const [opponentConnected, setOpponentConnected] = useState(false);
-  const [gameId, setGameId] = useState(null);
-  const [showModal, setShowModal] = useState(true);
-  const [inputGameId, setInputGameId] = useState("");
   const [lastMove, setLastMove] = useState(null);
   const [showParticles, setShowParticles] = useState(false);
-
-  useEffect(() => {
-    socket.connect();
-
-    socket.on("connect", () => {
-      setConnected(true);
-    });
-
-    socket.on("disconnect", () => {
-      setConnected(false);
-      setOpponentConnected(false);
-    });
-
-    socket.on("game_joined", ({ gameId: newGameId, color }) => {
-      setGameId(newGameId);
-      setPlayerColor(color);
-      setShowModal(false);
-    });
-
-    socket.on("opponent_joined", () => {
-      setOpponentConnected(true);
-    });
-
-    socket.on("opponent_disconnected", () => {
-      setOpponentConnected(false);
-    });
-
-    socket.on(
-      "move_made",
-      ({ fromRow, fromCol, toRow, toCol, newTurn, captured }) => {
-        setBoard((prevBoard) =>
-          makeMove(prevBoard, fromRow, fromCol, toRow, toCol),
-        );
-        setCurrentTurn(newTurn);
-        setSelectedSquare(null);
-        setValidMoves([]);
-        setLastMove({ fromRow, fromCol, toRow, toCol, captured });
-        if (captured) {
-          setShowParticles(true);
-          setTimeout(() => setShowParticles(false), 1000);
-        }
-      },
-    );
-
-    socket.on("game_over", ({ result }) => {
-      setGameStatus(result);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  const handleCreateGame = () => {
-    socket.emit("create_game");
-  };
-
-  const handleJoinGame = () => {
-    if (inputGameId.trim()) {
-      socket.emit("join_game", { gameId: inputGameId.trim() });
-    }
-  };
 
   const handleMove = (fromRow, fromCol, toRow, toCol) => {
     if (toRow === null && toCol === null) {
@@ -139,27 +64,9 @@ function App() {
               : "white_wins"
             : "draw",
         );
-        socket.emit("game_over", {
-          gameId,
-          result:
-            gameOver === "checkmate"
-              ? isWhite
-                ? "black_wins"
-                : "white_wins"
-              : "draw",
-        });
       } else {
         const newTurn = currentTurn === "white" ? "black" : "white";
         setCurrentTurn(newTurn);
-        socket.emit("make_move", {
-          gameId,
-          fromRow,
-          fromCol,
-          toRow,
-          toCol,
-          newTurn,
-          captured,
-        });
       }
     }
   };
@@ -172,14 +79,10 @@ function App() {
     setGameStatus("playing");
     setLastMove(null);
     setShowParticles(false);
-    socket.emit("reset_game", { gameId });
   };
 
   const getStatusMessage = () => {
     if (gameStatus === "playing") {
-      if (!opponentConnected) {
-        return "Aguardando oponente...";
-      }
       return currentTurn === "white" ? "Vez das Brancas" : "Vez das Pretas";
     }
     if (gameStatus === "white_wins") return "Brancas Venceram!";
@@ -189,11 +92,7 @@ function App() {
   };
 
   const canPlay = () => {
-    return (
-      gameStatus === "playing" &&
-      opponentConnected &&
-      playerColor === currentTurn
-    );
+    return gameStatus === "playing";
   };
 
   return (
@@ -203,24 +102,9 @@ function App() {
           <Col md={10} lg={8}>
             <Card className="shadow-lg border-0">
               <Card.Header className="bg-gradient text-black text-center py-3">
-                <h1 className="mb-0">♔ Chess Online ♚</h1>
+                <h1 className="mb-0">♔ Chess Local ♚</h1>
               </Card.Header>
               <Card.Body className="p-4">
-                {/* Connection Status */}
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <Badge bg={connected ? "success" : "danger"}>
-                    {connected ? "Conectado" : "Desconectado"}
-                  </Badge>
-                  {gameId && <Badge bg="info">Sala: {gameId}</Badge>}
-                  {playerColor && (
-                    <Badge
-                      bg={playerColor === "white" ? "light" : "dark"}
-                      className="text-dark"
-                    >
-                      Você: {playerColor === "white" ? "Brancas" : "Pretas"}
-                    </Badge>
-                  )}
-                </div>
 
                 {/* Game Status */}
                 <Alert
@@ -271,55 +155,12 @@ function App() {
                       Nova Partida
                     </Button>
                   )}
-                  {gameId && (
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() => navigator.clipboard.writeText(gameId)}
-                    >
-                      Copiar ID da Sala
-                    </Button>
-                  )}
                 </div>
-
-                {!canPlay() && gameStatus === "playing" && (
-                  <Alert variant="warning" className="mt-3 text-center">
-                    Aguarde sua vez...
-                  </Alert>
-                )}
               </Card.Body>
             </Card>
           </Col>
         </Row>
       </Container>
-
-      {/* Game Join Modal */}
-      <Modal show={showModal} centered backdrop="static">
-        <Modal.Header className="bg-gradient text-white">
-          <Modal.Title>Entrar no Jogo</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p className="text-center mb-4">Escolha uma opção para começar:</p>
-          <div className="d-grid gap-3">
-            <Button variant="primary" size="lg" onClick={handleCreateGame}>
-              Criar Nova Sala
-            </Button>
-            <div className="text-center text-muted">ou</div>
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Digite o ID da sala"
-                value={inputGameId}
-                onChange={(e) => setInputGameId(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleJoinGame()}
-              />
-              <Button variant="success" onClick={handleJoinGame}>
-                Entrar
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 }

@@ -2,6 +2,7 @@
   "name": "web-chess-game",
   "version": "1.0.0",
   "description": "Interactive online chess game built with React and Bootstrap",
+  "homepage": "https://enzodiasdev.github.io/_FrontUnicesumar__/webChess",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",

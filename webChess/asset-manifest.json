@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/_FrontUnicesumar__/webChess/static/css/main.4d260d64.css",
+    "main.js": "/_FrontUnicesumar__/webChess/static/js/main.d2bb07cf.js",
+    "index.html": "/_FrontUnicesumar__/webChess/index.html",
+    "main.4d260d64.css.map": "/_FrontUnicesumar__/webChess/static/css/main.4d260d64.css.map",
+    "main.d2bb07cf.js.map": "/_FrontUnicesumar__/webChess/static/js/main.d2bb07cf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4d260d64.css",
+    "static/js/main.d2bb07cf.js"
+  ]
+}
